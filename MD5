@@ -1,0 +1,13 @@
+4e460a840f2fae672aa1249c80773b01 *DESCRIPTION
+c5b8b5181226a13861583e561c927b97 *NAMESPACE
+ec6af51c522e41fb8533b88ed8486f20 *NEWS
+8c45cd6fb0e957608331a2811c2aa810 *R/Kc_computation_C.R
+ab57380de54205301e1dd799a9c9451b *R/chaos01_plot.R
+b7cfeab8f99388a56093648be3a0b8bd *R/logistic.R
+bf1f35e8fc37b5cebe068ce32bd88f05 *R/test_chaos01.R
+28de37111390f852f33e5b53c6b71d32 *README
+6a511818672a82bdb64b8bcd8480ea20 *man/gen.logistic.Rd
+d2e89699c8b05701b2cc9d15c8b8974b *man/plot.chaos01.Rd
+2a36fb920c3c9f2f237a0b6b1ac75b0c *man/plot.chaos01.res.Rd
+75c38005c50ffed075c3f48dc98887a2 *man/testChaos01.Rd
+63d134b3abf0c86ea3aad96d29c63475 *src/Kc_computation.c
