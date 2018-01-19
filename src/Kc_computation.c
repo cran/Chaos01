@@ -1,9 +1,7 @@
 #include <math.h>
-#include <R.h>
-#include <Rinternals.h>
 
 /*
-vec_x: time series
+TS: time series
 c: coefficient c (determine series translation)
 N: time series length
 mean_x2: time series mean on second power
@@ -13,19 +11,19 @@ Dc: time steps
 alpha: noise dampening parameter
 */
 
-void compute_kc(double *vec_x, double *c, int *N, double *mean_x2,
+void compute_kc(double *TS, double *c, int *N, double *mean_x2,
 	double *pc, double *qc, double *Mc, double *Dc, double *alpha
 	){
 
 double Ma;
 int i,j,n_cut;
 
-	pc[0] = vec_x[0]*cos(*c);
-	qc[0] = vec_x[0]*sin(*c);
+	pc[0] = TS[0]*cos(*c);
+	qc[0] = TS[0]*sin(*c);
 
 	for(i = 1; i<(*N); i++){
-		pc[i] = pc[i-1] + vec_x[i]*cos(*c*(i+1));
-		qc[i] = qc[i-1] + vec_x[i]*sin(*c*(i+1));
+		pc[i] = pc[i-1] + TS[i]*cos(*c*(i+1));
+		qc[i] = qc[i-1] + TS[i]*sin(*c*(i+1));
         }
 	n_cut = *N/10;
 

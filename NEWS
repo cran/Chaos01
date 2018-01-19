@@ -1,3 +1,7 @@
+Version 1.1.0
+  * Functions for quick RQA analysis were added to the package.
+  * Parameters 'plotvar' and 'mdcol' were added to the plot.chaos01 function.
+
 Version 1.0.1
   * Wrong memory access in C code corrected.
 

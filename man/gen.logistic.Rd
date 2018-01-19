@@ -25,4 +25,3 @@ plot(vec.x, type = "l")
 }
 \keyword{logistic}
 \keyword{map}
-

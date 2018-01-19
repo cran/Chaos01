@@ -1,9 +1,9 @@
-testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi/5, 4*pi/5), c.gen = "random", par = "seq", num.threads = NA){
+testChaos01 <- function(TS, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi/5, 4*pi/5), c.gen = "random", par = "seq", num.threads = NA, include.TS = FALSE){
 
   #' Function to compute 0-1 test for chaos
   #'
   #' This function computes results of the 0-1 test for chaos from the numeric vector (time series).
-  #' @param vec.x the input vector. This should be a numeric vector.
+  #' @param TS the input vector. This should be a numeric vector.
   #' @param c.rep integer, defines how many different parameters "c" should be used for the computation. Default is 100.
   #' @param alpha numeric, the noise dampening parameter. If 0, no noise dampening is done. For more details see the Gottwald and Melbourne (2004). Default is 0.
   #' @param out logical, if TRUE return the list of class "chaos01.res". This list contain lists of "chaos01" list with values of pc, qc, Mc, Dc, Kc and c. These can be then easily plotted by the plot function. Default is FALSE.
@@ -24,18 +24,19 @@ testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi
   #' Default is "seq".
   #' Note: If there is unrecognized input, it will use default.
   #' @param num.threads integer, number of threads use for the computation. When the computation is sequential, this is ignored. Default is NA.
+  #' @param include.TS logical, if TRUE and out is TRUE input time series will be added to the list of outputs. Default is FALSE.
   #' @seealso \code{\link{plot.chaos01}}, \code{\link{plot.chaos01.res}}
   #' @keywords chaos, test
   #' @export
   #' @examples
-  #' vec.x <- gen.logistic(mu = 3.55, iter = 2000)
+  #' TS <- gen.logistic(mu = 3.55, iter = 2000)
   #'
   #' #The median of Kc
-  #' res <- testChaos01(vec.x)
+  #' res <- testChaos01(TS)
   #' print(res)
   #'
   #' #Output for each value of c
-  #' res2 <- testChaos01(vec.x, out = TRUE)
+  #' res2 <- testChaos01(TS, out = TRUE)
   #'
   #' summary(res2[[1]])
   #' head(res2[[1]]$pc)
@@ -46,22 +47,22 @@ testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi
   #'
   #' \dontrun{
   #' #Introducing noise
-  #' vec.x2 <- vec.x + runif(2000, 0, 0.1)
+  #' TS2 <- TS + runif(2000, 0, 0.1)
   #'
-  #' res.orig <- testChaos01(vec.x, alpha = 0)
-  #' res.damp <- testChaos01(vec.x, alpha = 2.5)
+  #' res.orig <- testChaos01(TS, alpha = 0)
+  #' res.damp <- testChaos01(TS, alpha = 2.5)
   #'
   #' sprintf(Original test result %s\n Dampened test result %s, res.orig, res.damp)
   #'
   #' #Parallel
-  #' res <- testChaos01(vec.x, par = "parallel", num.treads = 2)
+  #' res <- testChaos01(TS, par = "parallel", num.treads = 2)
   #'
   #' #Parallel cluster
-  #' res <- testChaos01(vec.x, par = "MPI", num.treads = 2)
+  #' res <- testChaos01(TS, par = "MPI", num.treads = 2)
   #' Rmpi::mpi.finalize()
   #'
   #' #Different interval for generating c
-  #' res <- testChaos01(vec.x, c.int = c(0, pi))
+  #' res <- testChaos01(TS, c.int = c(0, pi))
   #' }
   #' @references
   #' Gottwald G.A. and Melbourne I. (2004) On the implementation of the 0-1 Test for Chaos, SIAM J. Appl. Dyn. Syst., 8(1), 129–145.
@@ -80,33 +81,39 @@ testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi
   #' @return
   #' A numeric from the interval (0,1). 0 stands for the regular dynamics and 1 for the chaotic dynamics. If the parameter out = TRUE, the output is list of list of all the computed variables. This is mainly for research and testing purposes.
 
-  #=======================================
-  # Check input
-  #=======================================
+  #================= Check Input =====================
 
-  if(!(is.numeric(vec.x))){
-    stop("vec.x is not numeric.")
+  if(!(is.numeric(TS) || is.integer(TS))){
+    stop("Error: 'TS' is not a numeric.")
   }
 
+  if(!(is.logical(out))){
+    stop("Error: 'out' is not a logical.")
+  }
+  
+  if(!(is.logical(include.TS))){
+    stop("Error: 'out' is not a logical.")
+  }
+  
   if(!(is.numeric(alpha) || is.integer(alpha))){
-    stop("alpha is not numeric.")
+    stop("Error: 'alpha' is not a numeric.")
   }
 
   if(!requireNamespace("parallel", quietly = TRUE) & par == "parallel"){
-    print("No package parallel found. Switching to sequential computation.")
+    warning("No package parallel found. Switching to sequential computation.")
     par <- "seq"
   }
   if(!requireNamespace("Rmpi", quietly = TRUE) & par == "MPI"){
-    print("No package Rmpi found. Switching sequential computation.")
+    warning("No package Rmpi found. Switching sequential computation.")
     par <- "seq"
   }
 
   if((par %in% c("MPI", "parallel") & !(is.numeric(num.threads) || is.integer(num.threads)))){
-    stop("Parameter num.threads should be integer, for the parallel computation.")
+    stop("Error: Parameter num.threads should be integer, for the parallel computation.")
   }
-  #=======================================
-  # Generate vector of values c to be used
-  #=======================================
+  
+  #================= Generate vector of values c to be used =====================
+  
   switch(as.character(c.gen),
          equal = {
            c <- seq(from = min(c.int), to = max(c.int), length.out = c.rep)
@@ -118,7 +125,8 @@ testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi
 
   switch(as.character(par),
 
-  # multicore parallel, one machine
+  #================= Multicore parallel, one machine =====================
+
     parallel = {
       no_cores <- parallel::detectCores() - 1
       num.threads <- min(num.threads, no_cores)
@@ -128,24 +136,27 @@ testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi
             res <- parallel::parLapplyLB(cl,
                                    c,
                                    K.c.computation,
-                                   vec.x,
+                                   TS,
                                    alpha,
-                                   out)
+                                   out,
+                                   include.TS)
           class(res) <- "chaos01.res"
       } else{
         Kc <- unlist(parallel::parLapplyLB(cl,
                                  c,
                                  K.c.computation,
-                                 vec.x,
+                                 TS,
                                  alpha,
-                                 out))
+                                 out,
+                                 include.TS))
       }
       parallel::stopCluster(cl)
       if(out){return(res)
       } else {return(stats::median(Kc))}
     },
 
-    # cluster parallel
+  #================= MPI, cluster parallel =====================
+
     MPI = {
 
          Rmpi::mpi.spawn.Rslaves(nslaves = num.threads, needlog = F)
@@ -153,16 +164,18 @@ testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi
           if(out){
             res <- Rmpi::mpi.parLapply(c,
                                        K.c.computation,
-                                       vec.x,
+                                       TS,
                                        alpha,
-                                       out)
+                                       out,
+                                       include.TS)
             class(res) <- "chaos01.res"
           } else{
             Kc <- unlist(Rmpi::mpi.parLapply(c,
                                              K.c.computation,
-                                             vec.x,
+                                             TS,
                                              alpha,
-                                             out))
+                                             out,
+                                             include.TS))
           }
          Rmpi::mpi.close.Rslaves(dellog = F)
 
@@ -170,22 +183,25 @@ testChaos01 <- function(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi
            } else {return(stats::median(Kc))}
     },
 
-    # sequential
+  #================= Sequential =====================
+
     {
       if(out){
         res <- lapply(c,
                       K.c.computation,
-                      vec.x,
+                      TS,
                       alpha,
-                      out)
+                      out,
+                      include.TS)
         class(res) <- "chaos01.res"
         return(res)
       } else{
         K.c <- unlist(lapply(c,
                              K.c.computation,
-                             vec.x,
+                             TS,
                              alpha,
-                             out))
+                             out,
+                             include.TS))
 
         return(stats::median(K.c))
       }

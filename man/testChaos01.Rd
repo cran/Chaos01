@@ -4,11 +4,12 @@
 \alias{testChaos01}
 \title{Function to compute 0-1 test for chaos}
 \usage{
-testChaos01(vec.x, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi/5,
-  4 * pi/5), c.gen = "random", par = "seq", num.threads = NA)
+testChaos01(TS, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi/5, 4 *
+  pi/5), c.gen = "random", par = "seq", num.threads = NA,
+  include.TS = FALSE)
 }
 \arguments{
-\item{vec.x}{the input vector. This should be a numeric vector.}
+\item{TS}{the input vector. This should be a numeric vector.}
 
 \item{c.rep}{integer, defines how many different parameters "c" should be used for the computation. Default is 100.}
 
@@ -36,6 +37,8 @@ Default is "seq".
 Note: If there is unrecognized input, it will use default.}
 
 \item{num.threads}{integer, number of threads use for the computation. When the computation is sequential, this is ignored. Default is NA.}
+
+\item{include.TS}{logical, if TRUE and out is TRUE input time series will be added to the list of outputs. Default is FALSE.}
 }
 \value{
 A numeric from the interval (0,1). 0 stands for the regular dynamics and 1 for the chaotic dynamics. If the parameter out = TRUE, the output is list of list of all the computed variables. This is mainly for research and testing purposes.
@@ -55,14 +58,14 @@ In these cases you may receive unclear results, or in special cases the false re
 You can find more on the validity of the test in Gottwald and Melbourne (2009).
 }
 \examples{
-vec.x <- gen.logistic(mu = 3.55, iter = 2000)
+TS <- gen.logistic(mu = 3.55, iter = 2000)
 
 #The median of Kc
-res <- testChaos01(vec.x)
+res <- testChaos01(TS)
 print(res)
 
 #Output for each value of c
-res2 <- testChaos01(vec.x, out = TRUE)
+res2 <- testChaos01(TS, out = TRUE)
 
 summary(res2[[1]])
 head(res2[[1]]$pc)
@@ -73,22 +76,22 @@ class(res2[[1]])
 
 \dontrun{
 #Introducing noise
-vec.x2 <- vec.x + runif(2000, 0, 0.1)
+TS2 <- TS + runif(2000, 0, 0.1)
 
-res.orig <- testChaos01(vec.x, alpha = 0)
-res.damp <- testChaos01(vec.x, alpha = 2.5)
+res.orig <- testChaos01(TS, alpha = 0)
+res.damp <- testChaos01(TS, alpha = 2.5)
 
 sprintf(Original test result \%s\\n Dampened test result \%s, res.orig, res.damp)
 
 #Parallel
-res <- testChaos01(vec.x, par = "parallel", num.treads = 2)
+res <- testChaos01(TS, par = "parallel", num.treads = 2)
 
 #Parallel cluster
-res <- testChaos01(vec.x, par = "MPI", num.treads = 2)
+res <- testChaos01(TS, par = "MPI", num.treads = 2)
 Rmpi::mpi.finalize()
 
 #Different interval for generating c
-res <- testChaos01(vec.x, c.int = c(0, pi))
+res <- testChaos01(TS, c.int = c(0, pi))
 }
 }
 \references{
@@ -101,4 +104,3 @@ Gottwald G.A. and Melbourne I. (2009) On the validity of the 0-1 Test for Chaos,
 }
 \keyword{chaos,}
 \keyword{test}
-

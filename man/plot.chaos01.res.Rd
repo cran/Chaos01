@@ -31,4 +31,3 @@ Gottwald G.A. and Melbourne I. (2004) On the implementation of the 0-1 Test for 
 \keyword{chaos}
 \keyword{plot}
 \keyword{test}
-
