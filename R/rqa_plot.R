@@ -1,4 +1,4 @@
-plot.chaos01.rqa.sequence <- function(x, plotvar = c("RR", "DET"), ...){
+plot.chaos01.rqa.sequence <- function(x, plotvar = c("RR", "DET"), type = NULL, ...){
     #' Plot the results for the sequence of eps values.
     #'
     #' This function plot the selected variables of RQA as a sequence for the different values of epsilon.
@@ -22,6 +22,7 @@ plot.chaos01.rqa.sequence <- function(x, plotvar = c("RR", "DET"), ...){
     #' }
     #' 
     #' Default = c("RR", DET"). 
+    #' @param type string what type of plot should be drawn: see\code{\link[graphics]{plot}}
     #' @param ... arguments to be passed as graphical parameters.
     #' @importFrom graphics plot
     #' @keywords plot rqa threshold
@@ -48,36 +49,38 @@ plot.chaos01.rqa.sequence <- function(x, plotvar = c("RR", "DET"), ...){
     
   eps <- unlist(lapply(x, function(y)y$settings$eps))
  
+  if(is.null(type)){type = "l"}
+  
   for(plots in plotvar)
     switch(plots,
            "RR"    = {RR     <- unlist(lapply(x, function(y)y$RQA$RR))
-                      plot(eps, RR, type ="l", ...)},
+                      plot(eps, RR, type = type, ...)},
            "RATIO" = {RATIO  <- unlist(lapply(x, function(y)y$RQA$RATIO))
-                      plot(eps, RATIO, type ="l", ...)},
+                      plot(eps, RATIO, type = type, ...)},
            "DET"   = {DET    <- unlist(lapply(x, function(y)y$RQA$DET))
-                      plot(eps, DET, type ="l", ...)},
+                      plot(eps, DET, type = type, ...)},
            "AVG"   = {AVG    <- unlist(lapply(x, function(y)y$RQA$AVG))
-                      plot(eps, AVG, type ="l", ...)},
+                      plot(eps, AVG, type = type, ...)},
            "MAX"   = {MAX    <- unlist(lapply(x, function(y)y$RQA$MAX))
-                      plot(eps, MAX, type ="l", ...)},
+                      plot(eps, MAX, type = type, ...)},
            "LAM"   = {LAM    <- unlist(lapply(x, function(y)y$RQA$LAM))
-                      plot(eps, LAM, type ="l", ...)},
+                      plot(eps, LAM, type = type, ...)},
            "TT"    = {TT     <- unlist(lapply(x, function(y)y$RQA$TT))
-                      plot(eps, TT, type ="l", ...)},
+                      plot(eps, TT, type = type, ...)},
            "DIV"   = {DIV    <- unlist(lapply(x, function(y)y$RQA$DIV))
-                      plot(eps, DIV, type ="l", ...)},
+                      plot(eps, DIV, type = type, ...)},
            "TR"    = {TR     <- unlist(lapply(x, function(y)y$RQA$TR))
-                      plot(eps, TR, type ="l", ...)},
+                      plot(eps, TR, type = type, ...)},
            "DLRP"  = {DLRP   <- unlist(lapply(x, function(y)y$RQA$DLRP))
-                      plot(eps, DLRP, type ="l", ...)},
+                      plot(eps, DLRP, type = type, ...)},
            "DLC"   = {DLC    <- unlist(lapply(x, function(y)y$RQA$DLC))
-                      plot(eps, DLC, type ="l", ...)},
+                      plot(eps, DLC, type = type, ...)},
            "VLRP"  = {VLRP   <- unlist(lapply(x, function(y)y$RQA$VLRP))
-                      plot(eps, VLRP, type ="l", ...)},
+                      plot(eps, VLRP, type = type, ...)},
            "VLC"   = {VLC    <- unlist(lapply(x, function(y)y$RQA$VLC))
-                      plot(eps, VLC, type ="l", ...)},
+                      plot(eps, VLC, type = type, ...)},
            "MAX_V" = {MAX_V  <- unlist(lapply(x, function(y)y$RQA$MAX_V))
-                      plot(eps, MAX_V, type ="l", ...)}
+                      plot(eps, MAX_V, type = type, ...)}
            )
   
 }

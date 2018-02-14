@@ -78,8 +78,8 @@ class(res2[[1]])
 #Introducing noise
 TS2 <- TS + runif(2000, 0, 0.1)
 
-res.orig <- testChaos01(TS, alpha = 0)
-res.damp <- testChaos01(TS, alpha = 2.5)
+res.orig <- testChaos01(TS2, alpha = 0)
+res.damp <- testChaos01(TS2, alpha = 2.5)
 
 sprintf(Original test result \%s\\n Dampened test result \%s, res.orig, res.damp)
 
@@ -100,7 +100,7 @@ Gottwald G.A. and Melbourne I. (2004) On the implementation of the 0-1 Test for 
 Gottwald G.A. and Melbourne I. (2009) On the validity of the 0-1 Test for Chaos, Nonlinearity, 22, 6
 }
 \seealso{
-\code{\link{plot.chaos01}}, \code{\link{plot.chaos01.res}}
+\code{\link{plot.chaos01}}, \code{\link{plot.chaos01.res}}, \code{\link{getVal}}
 }
 \keyword{chaos,}
 \keyword{test}

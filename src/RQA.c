@@ -113,7 +113,6 @@ void diag_rqa_max(double *TS, double *RQA, int *R_theta, int *R_rmax, int *R_dim
     }
     
 //================================== Compute vertical lines ==============================    
-    
 line_length = 0;
     
     // If theta == 0, it is possible for the vertical to transit "through" the main diagonal and it is necessary to compute the whole recurrence plot

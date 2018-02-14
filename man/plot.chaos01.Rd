@@ -5,10 +5,11 @@
 \title{Plot the additional results of 0-1 test for chaos.}
 \usage{
 \method{plot}{chaos01}(x, plotvar = c("PQ", "MD"), mdcol = NULL, col = 1,
+  main = NULL, xlab = NULL, ylab = NULL, type = NULL, ylim = NULL,
   ...)
 }
 \arguments{
-\item{x}{the object of "chaos01" class, produced by test.chaos01 function when parameter Val = "TRUE". Subset the output of the function to get the results for the concrete c. See the example.}
+\item{x}{the object of "chaos01" class, produced by testChaos01 function when parameter out = "TRUE". Subset the output of the function to get the results for the concrete c. See the example.}
 
 \item{plotvar}{list/vector define what should be plotted.
 \itemize{
@@ -32,10 +33,24 @@ Default is NULL.}
 
 \item{col}{color for the lines in plots as defined in plot(). Default is 1.}
 
+\item{main}{string an overall title for the plot: see \code{\link[graphics]{title}}}
+
+\item{xlab}{string a title for the x axis: see \code{\link[graphics]{title}}}
+
+\item{ylab}{string a title for the y axis: see \code{\link[graphics]{title}}}
+
+\item{type}{string what type of plot should be drawn: see \code{\link[graphics]{plot}}}
+
+\item{ylim}{numeric vectors of length 2, giving the x and y coordinates ranges: see \code{\link[graphics]{plot.window}}}
+
 \item{...}{arguments to be passed as graphical parameters.}
 }
 \description{
 This function plot the Pc to Qc plot and Mc/Dc plot as described in Gottwald and Melbourne (2004).
+}
+\details{
+When plotvar = c("PQ", "MD"), or plotvar = c("MD", "PQ") the settings for main, xlab, ylab, ylim, would affect both plots, what does not make sense in most cases.
+To prevent this, setting of main, xlab, ylab and ylim only affects the first figure and second is set to default values for the given figure.
 }
 \examples{
 vec.x <- gen.logistic(mu = 3.55, iter = 2000)

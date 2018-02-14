@@ -1,6 +1,17 @@
+Version 1.1.1
+  * Fixed the computation of Dc [(1 - cos(*c * (i + 1))) / (1 - cos(*c)) was changed to (1 - cos(*c * i)) / (1 - cos(*c))].
+  * Fixed computation when using alpha parameter.
+  * Improved performance when plotting Kc against c from chaos01.res object.
+  * It is possible to change the plot title, xlab, ylab and type when usign plot for chaos01 and chaos01.res objects.
+  * It is possible to change type in the plot of rqa object.
+  * Added link to the gitlab site.
+  * INSTALL file added.
+  * Added zzz.R
+  
 Version 1.1.0
   * Functions for quick RQA analysis were added to the package.
   * Parameters 'plotvar' and 'mdcol' were added to the plot.chaos01 function.
+  * include.TS parameter added to the testChaos01 function.
 
 Version 1.0.1
   * Wrong memory access in C code corrected.

@@ -4,7 +4,8 @@
 \alias{plot.chaos01.rqa.sequence}
 \title{Plot the results for the sequence of eps values.}
 \usage{
-\method{plot}{chaos01.rqa.sequence}(x, plotvar = c("RR", "DET"), ...)
+\method{plot}{chaos01.rqa.sequence}(x, plotvar = c("RR", "DET"),
+  type = NULL, ...)
 }
 \arguments{
 \item{x}{the object of "rqa.sequence" class, produced by rqa.seq function.}
@@ -28,6 +29,8 @@
 }
 
 Default = c("RR", DET").}
+
+\item{type}{string what type of plot should be drawn: see\code{\link[graphics]{plot}}}
 
 \item{...}{arguments to be passed as graphical parameters.}
 }

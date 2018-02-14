@@ -25,7 +25,7 @@ testChaos01 <- function(TS, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi/5,
   #' Note: If there is unrecognized input, it will use default.
   #' @param num.threads integer, number of threads use for the computation. When the computation is sequential, this is ignored. Default is NA.
   #' @param include.TS logical, if TRUE and out is TRUE input time series will be added to the list of outputs. Default is FALSE.
-  #' @seealso \code{\link{plot.chaos01}}, \code{\link{plot.chaos01.res}}
+  #' @seealso \code{\link{plot.chaos01}}, \code{\link{plot.chaos01.res}}, \code{\link{getVal}}
   #' @keywords chaos, test
   #' @export
   #' @examples
@@ -49,8 +49,8 @@ testChaos01 <- function(TS, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi/5,
   #' #Introducing noise
   #' TS2 <- TS + runif(2000, 0, 0.1)
   #'
-  #' res.orig <- testChaos01(TS, alpha = 0)
-  #' res.damp <- testChaos01(TS, alpha = 2.5)
+  #' res.orig <- testChaos01(TS2, alpha = 0)
+  #' res.damp <- testChaos01(TS2, alpha = 2.5)
   #'
   #' sprintf(Original test result %s\n Dampened test result %s, res.orig, res.damp)
   #'

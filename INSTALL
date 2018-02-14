@@ -1,0 +1,5 @@
+When ICC is used to compile C code, it is advised to put following line to ~/.R/Makevars  "CFLAGS = -fp-speculation=off", if possible.
+If -fp-speculation is set to any other value, computation of testChaos01 routine is exponentially slower.
+Settings of -fp-model had no effect on computational speed.
+
+There were no such problems found when using GCC.

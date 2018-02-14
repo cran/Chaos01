@@ -4,10 +4,19 @@
 \alias{plot.chaos01.res}
 \title{Plot Kc based on c}
 \usage{
-\method{plot}{chaos01.res}(x, ...)
+\method{plot}{chaos01.res}(x, main = NULL, xlab = NULL, ylab = NULL,
+  type = NULL, ...)
 }
 \arguments{
-\item{x}{the object of "chaos01.res" class, produced by test.chaos01 function when parameter Val = "TRUE".}
+\item{x}{the object of "chaos01.res" class, produced by testChaos01 function when parameter out = "TRUE".}
+
+\item{main}{string an overall title for the plot: see \code{\link[graphics]{title}}}
+
+\item{xlab}{string a title for the x axis: see \code{\link[graphics]{title}}}
+
+\item{ylab}{string a title for the y axis: see \code{\link[graphics]{title}}}
+
+\item{type}{string what type of plot should be drawn: see \code{\link[graphics]{plot}}}
 
 \item{...}{arguments to be passed as graphical parameters.}
 }

@@ -27,6 +27,7 @@ int i,j,n_cut;
         }
 	n_cut = *N/10;
 
+	
 	for(i = 1; i<(n_cut+1); i++){
 		Ma = 0;
 		for(j = 0; j<(*N-i); j++){
@@ -34,10 +35,10 @@ int i,j,n_cut;
 		}
 
 		Mc[i-1] = Ma/(*N-(i+1));
-		Dc[i-1] = Mc[i-1] - (*mean_x2)*(1 - cos(*c*(i+1)))/(1 - cos(*c));
+		Dc[i-1] = Mc[i-1] - (*mean_x2 * (1 - cos(*c * i))) / (1 - cos(*c));
 
 		if(*alpha>0){
-                    Dc[i-1] = Dc[i-1] + *mean_x2*sin(sqrt(2)*(i+1))*(*alpha);
+                    Dc[i-1] = Dc[i-1] + *mean_x2 * sin(sqrt(2) * i) * (*alpha);
                 }
 	}
 
