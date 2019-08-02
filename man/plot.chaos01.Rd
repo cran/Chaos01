@@ -4,20 +4,22 @@
 \alias{plot.chaos01}
 \title{Plot the additional results of 0-1 test for chaos.}
 \usage{
-\method{plot}{chaos01}(x, plotvar = c("PQ", "MD"), mdcol = NULL, col = 1,
-  main = NULL, xlab = NULL, ylab = NULL, type = NULL, ylim = NULL,
-  ...)
+\method{plot}{chaos01}(x, plotvar = c("PQ", "MD", "BB", "COG"),
+  mdcol = NULL, step = NULL, col2 = 2, col = 1, main = NULL,
+  xlab = NULL, ylab = NULL, type = NULL, ylim = NULL, ...)
 }
 \arguments{
 \item{x}{the object of "chaos01" class, produced by testChaos01 function when parameter out = "TRUE". Subset the output of the function to get the results for the concrete c. See the example.}
 
 \item{plotvar}{list/vector define what should be plotted.
 \itemize{
-    \item c("PQ", "MD") - both plots Pc - Qc, and Mc/Dc should be plotted.
+    \item c("PQ", "MD", "BB", "COG") - plot Pc - Qc figure, and one of the Mc/Dc, bounding box or centre of gravity figure, depending on the appraoch used for the computation.
     \item "PQ"          - only Pc-Qc should be plotted.
     \item "MD"          - only Mc/Dc plot should be plotted.
+    \item "BB"          - only bounding box plot should be plotted.
+    \item "COG"         - only centre of gravity plot should be plotted.
 }
-Default is c("PQ", "MD").}
+Default is c("PQ", "MD", "BB" , "COG").}
 
 \item{mdcol}{vector of length 2 or NULL. 
 If NULL colors in MD plot will be the same as in 'col' argument. If vector of length 2, first color stands for the Mc line and second color for the Dc line.
@@ -30,6 +32,10 @@ If NULL colors in MD plot will be the same as in 'col' argument. If vector of le
 When used, it overrides 'col' argument. It is possible to set colors as numbers, or by the string name. 
  
 Default is NULL.}
+
+\item{step}{integer, set the step with which is plotted the bounding box or the cetre of gravity plot. Default is floor(length(x$pc)/20). This will plot 20 bounding boxes/centres of gravity.}
+
+\item{col2}{color for the second object in the plot if plotvar = "BB" (bounding boxes), or plotvar = "COG" (centre of gravity dots). Default is 2.}
 
 \item{col}{color for the lines in plots as defined in plot(). Default is 1.}
 
@@ -55,13 +61,15 @@ To prevent this, setting of main, xlab, ylab and ylim only affects the first fig
 \examples{
 vec.x <- gen.logistic(mu = 3.55, iter = 2000)
 
-#Output for each value of c
+# Output for each value of c
 res2 <- testChaos01(vec.x, out = TRUE)
 
 plot(res2[[1]], plotvar = c("PQ", "MD"), mdcol = c(4,3))
 }
 \references{
 Gottwald G.A. and Melbourne I. (2004) On the implementation of the 0-1 Test for Chaos, SIAM J. Appl. Dyn. Syst., 8(1), 129–145.
+
+Martinovic T. (2019)  Alternative approaches of evaluating the 0-1 test for chaos, Int. J. Comput. Math.
 }
 \seealso{
 \code{\link{testChaos01}}, \code{\link{plot.chaos01.res}}

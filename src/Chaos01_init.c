@@ -8,10 +8,12 @@
 /* .C calls */
 extern void compute_kc(void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void diag_rqa_max(void *, void *, void *, void *, void *, void *, void *, void *);
+extern void myrollmean(void *, void *, void *, void *);
 
 static const R_CMethodDef CEntries[] = {
   {"compute_kc",   (DL_FUNC) &compute_kc,   9},
   {"diag_rqa_max", (DL_FUNC) &diag_rqa_max, 8},
+  {"myrollmean", (DL_FUNC) &myrollmean, 4},
   {NULL, NULL, 0}
 };
 

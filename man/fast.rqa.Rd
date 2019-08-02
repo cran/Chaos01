@@ -84,6 +84,5 @@ summary(res)
 \seealso{
 \code{\link{rqa.seq}}, \code{\link{plot.chaos01.rqa.sequence}}, \code{\link{summary.chaos01.rqa}}
 }
-\keyword{determinism,}
+\concept{determinism test}
 \keyword{rqa}
-\keyword{test,}

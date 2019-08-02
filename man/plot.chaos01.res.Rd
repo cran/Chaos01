@@ -26,7 +26,7 @@ This function plot results Kc dependent on the value of parameter c as described
 \examples{
 vec.x <- gen.logistic(mu = 3.55, iter = 2000)
 
-#Output for each value of c
+# Output for each value of c
 res2 <- testChaos01(vec.x, out = TRUE)
 
 plot(res2)

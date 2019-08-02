@@ -25,7 +25,8 @@ rqa.seq <- function(from, to = NULL, by, TS, dim = 2, lag = 1, theta = 1, lmin =
   #' as an alternative to creating the sequence of threshold values.
   #' @param include.TS logical, if TRUE input time series will be added to the list of outputs. Default is FALSE.
   #' @seealso \code{\link{fast.rqa}}, \code{\link{plot.chaos01.rqa.sequence}}
-  #' @keywords determinism, test, rqa
+  #' @keywords rqa
+  #' @concept determinism test
   #' @export
   #' @examples
   #' vec.x <- gen.logistic(mu = 3.55, iter = 2000)
@@ -35,11 +36,11 @@ rqa.seq <- function(from, to = NULL, by, TS, dim = 2, lag = 1, theta = 1, lmin =
   #' from = 0.01 * x.range
   #' by   = 0.1 * x.range
   #' 
-  #' #Output for each value of eps
+  #' # Output for each value of eps
   #' res <- rqa.seq(vec.x, from = from, to = x.range, by = by, TS = vec.x, dim = 3, lag = 10)
   #' 
   #' \dontrun{
-  #' #It is a good idea to get a grasp on how RQA develop for different colored noise.
+  #' # It is a good idea to get a grasp on how RQA develop for different colored noise.
   #' if(requireNamespace(tuneR)){
   #' pink  <- tuneR::noise(kind = "pink", duration = 1000)@left
   #' red   <- tuneR::noise(kind = "red", duration = 1000)@left

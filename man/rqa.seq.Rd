@@ -67,11 +67,11 @@ x.range <- diff(range(vec.x))
 from = 0.01 * x.range
 by   = 0.1 * x.range
 
-#Output for each value of eps
+# Output for each value of eps
 res <- rqa.seq(vec.x, from = from, to = x.range, by = by, TS = vec.x, dim = 3, lag = 10)
 
 \dontrun{
-#It is a good idea to get a grasp on how RQA develop for different colored noise.
+# It is a good idea to get a grasp on how RQA develop for different colored noise.
 if(requireNamespace(tuneR)){
 pink  <- tuneR::noise(kind = "pink", duration = 1000)@left
 red   <- tuneR::noise(kind = "red", duration = 1000)@left
@@ -105,6 +105,5 @@ Zbilut, J.; Webber C., L. (2006). "Recurrence Quantification Analysis". Wiley En
 \seealso{
 \code{\link{fast.rqa}}, \code{\link{plot.chaos01.rqa.sequence}}
 }
-\keyword{determinism,}
+\concept{determinism test}
 \keyword{rqa}
-\keyword{test,}

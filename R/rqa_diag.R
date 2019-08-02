@@ -18,7 +18,8 @@ fast.rqa <- function(TS, dim = 2, lag = 1, eps, theta = 1, lmin = 3, include.TS 
   #' @param lmin integer, minimal length of line to be considered for recurrence line. Default is 3
   #' @param include.TS logical, if TRUE input time series will be added to the list of outputs. Default is FALSE.
   #' @seealso \code{\link{rqa.seq}}, \code{\link{plot.chaos01.rqa.sequence}}, \code{\link{summary.chaos01.rqa}}
-  #' @keywords determinism, test, rqa
+  #' @keywords rqa
+  #' @concept determinism test
   #' @export
   #' @examples
   #' vec.x <- gen.logistic(mu = 3.55, iter = 2000)
@@ -93,7 +94,7 @@ fast.rqa <- function(TS, dim = 2, lag = 1, eps, theta = 1, lmin = 3, include.TS 
 
   #================= Create sequence of threshold values =====================
   
-  rmax <- length(TS) - ((dim-1) * lag)
+  rmax <- length(TS) - ((dim-1) * lag) + 1
   RQA  <- rep(-1,14)
   
   res <- .C("diag_rqa_max",
@@ -171,7 +172,7 @@ Minimal line length : ", object$settings$lmin,"
       
 RECURRENCE PLOT STATISTICS
 ---------------------------------------------------
-Total recurrences : ", object$RQA$TR,"
+Total recurrences             : ", object$RQA$TR,"
 Recurrences on diagonal lines : ", object$RQA$DLRP,"
 Number of diagonal lines      : ", object$RQA$DLC,"
 Recurrences on vertical lines : ", object$RQA$VLRP,"

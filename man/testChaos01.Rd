@@ -4,16 +4,17 @@
 \alias{testChaos01}
 \title{Function to compute 0-1 test for chaos}
 \usage{
-testChaos01(TS, c.rep = 100, alpha = 0, out = FALSE, c.int = c(pi/5, 4 *
-  pi/5), c.gen = "random", par = "seq", num.threads = NA,
-  include.TS = FALSE)
+testChaos01(TS, c.rep = 100, alpha = 0, out = FALSE,
+  c.int = c(pi/5, 4 * pi/5), c.gen = "random", par = "seq",
+  num.threads = NA, include.TS = FALSE, approach = "cor",
+  window.size = NA, control.set.point = NA, threshold = NA)
 }
 \arguments{
 \item{TS}{the input vector. This should be a numeric vector.}
 
 \item{c.rep}{integer, defines how many different parameters "c" should be used for the computation. Default is 100.}
 
-\item{alpha}{numeric, the noise dampening parameter. If 0, no noise dampening is done. For more details see the Gottwald and Melbourne (2004). Default is 0.}
+\item{alpha}{numeric, the noise dampening parameter. If 0, no noise dampening is done. For more details see the Gottwald and Melbourne (2004). This variable is not used in "bounding box" and "centre of gravity" approaches. Default is 0.}
 
 \item{out}{logical, if TRUE return the list of class "chaos01.res". This list contain lists of "chaos01" list with values of pc, qc, Mc, Dc, Kc and c. These can be then easily plotted by the plot function. Default is FALSE.}
 
@@ -39,6 +40,19 @@ Note: If there is unrecognized input, it will use default.}
 \item{num.threads}{integer, number of threads use for the computation. When the computation is sequential, this is ignored. Default is NA.}
 
 \item{include.TS}{logical, if TRUE and out is TRUE input time series will be added to the list of outputs. Default is FALSE.}
+
+\item{approach}{character string, determine which computational approach to use.
+\itemize{
+\item "cor" - mean square displacement method with correlation proposed by Gottwald and Melbourne.
+\item "bb"  - bounding box method proposed by Martinovic.
+\item "cog" - centre of gravity method proposed by Martinovic.
+}}
+
+\item{window.size}{integer, window size used for the bounding box or the centre of gravity computation.}
+
+\item{control.set.point}{integer, point where the bounding box size should be checked, when the approach = "bb".}
+
+\item{threshold}{numeric, a threshold value for the bounding box computation and centre of gravity computation. For more information see Martinovic (2019).}
 }
 \value{
 A numeric from the interval (0,1). 0 stands for the regular dynamics and 1 for the chaotic dynamics. If the parameter out = TRUE, the output is list of list of all the computed variables. This is mainly for research and testing purposes.
@@ -60,11 +74,11 @@ You can find more on the validity of the test in Gottwald and Melbourne (2009).
 \examples{
 TS <- gen.logistic(mu = 3.55, iter = 2000)
 
-#The median of Kc
+# The median of Kc
 res <- testChaos01(TS)
 print(res)
 
-#Output for each value of c
+# Output for each value of c
 res2 <- testChaos01(TS, out = TRUE)
 
 summary(res2[[1]])
@@ -75,7 +89,7 @@ class(res2)
 class(res2[[1]])
 
 \dontrun{
-#Introducing noise
+# Introducing noise
 TS2 <- TS + runif(2000, 0, 0.1)
 
 res.orig <- testChaos01(TS2, alpha = 0)
@@ -83,14 +97,18 @@ res.damp <- testChaos01(TS2, alpha = 2.5)
 
 sprintf(Original test result \%s\\n Dampened test result \%s, res.orig, res.damp)
 
-#Parallel
+# Parallel
 res <- testChaos01(TS, par = "parallel", num.treads = 2)
 
-#Parallel cluster
+# Parallel cluster, remember to initialize and finalize the MPI
+# Needs to be run inside a script and run from a command line interface (CLI)
+# e.g. mpirun Rscript test_chaos01_mpi.R
+pbdMPI::init()
 res <- testChaos01(TS, par = "MPI", num.treads = 2)
-Rmpi::mpi.finalize()
+pbdMPI::finalize()
 
-#Different interval for generating c
+
+# Different interval for generating c
 res <- testChaos01(TS, c.int = c(0, pi))
 }
 }
@@ -98,9 +116,11 @@ res <- testChaos01(TS, c.int = c(0, pi))
 Gottwald G.A. and Melbourne I. (2004) On the implementation of the 0-1 Test for Chaos, SIAM J. Appl. Dyn. Syst., 8(1), 129–145.
 
 Gottwald G.A. and Melbourne I. (2009) On the validity of the 0-1 Test for Chaos, Nonlinearity, 22, 6
+
+Martinovic T. (2019)  Alternative approaches of evaluating the 0-1 test for chaos, Int. J. Comput. Math.
 }
 \seealso{
 \code{\link{plot.chaos01}}, \code{\link{plot.chaos01.res}}, \code{\link{getVal}}
 }
-\keyword{chaos,}
+\concept{chaos}
 \keyword{test}
