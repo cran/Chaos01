@@ -94,7 +94,7 @@ fast.rqa <- function(TS, dim = 2, lag = 1, eps, theta = 1, lmin = 3, include.TS 
 
   #================= Create sequence of threshold values =====================
   
-  rmax <- length(TS) - ((dim-1) * lag) + 1
+  rmax <- length(TS) - ((dim-1) * lag)
   RQA  <- rep(-1,14)
   
   res <- .C("diag_rqa_max",

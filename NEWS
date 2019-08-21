@@ -1,3 +1,10 @@
+Version 1.2.1
+  * Fixed error in RQA computation introduced in 1.2.0.
+  
+Version 1.2.0
+  * Introduced two new approaches to the 0-1 test for chaos computation. Bounding box and centre of gravity based.
+  * Switched from rmpi to pbdMPI for the mpi based parallel computation.
+
 Version 1.1.1
   * Fixed the computation of Dc [(1 - cos(*c * (i + 1))) / (1 - cos(*c)) was changed to (1 - cos(*c * i)) / (1 - cos(*c))].
   * Fixed computation when using alpha parameter.
